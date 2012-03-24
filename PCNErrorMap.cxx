@@ -85,7 +85,7 @@ void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
 
     if (hperBeetleBitMap[key] == NULL) {
       hperBeetleBitMap[key] = new TH2D(hname.c_str(), htitle.c_str(),
-				     10, -1.5, 9.5, 4, -1.5, 3.5);
+				     10, -1.5, 8.5, 4, -1.5, 2.5);
       hperBeetleBitMap[key]->SetXTitle("Bits with errors");
       hperBeetleBitMap[key]->SetYTitle("Bit values for correct PCN");
     }
