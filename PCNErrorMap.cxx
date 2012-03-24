@@ -1,3 +1,13 @@
+/**
+ * @file   PCNErrorMap.cxx
+ * @author Suvayu Ali <Suvayu.Ali@cern.ch>
+ * @date   Sat Mar 24 22:17:37 2012
+ *
+ * @brief  Implementation file for PCNError and PCNErrorMap
+ *
+ *
+ */
+
 #include <iostream>
 #include <sstream>
 
@@ -8,6 +18,12 @@
 #include <TCanvas.h>
 
 #include "PCNErrorMap.hxx"
+
+
+/**
+ * PCNError implementations
+ *
+ */
 
 
 PCNError::PCNError(unsigned int pcn, unsigned int pcnxor) :
@@ -49,10 +65,16 @@ void PCNError::setBits(std::string pcnbits, std::string xorbits)
 }
 
 
-PCNErrorMap::PCNErrorMap(unsigned int tell1s) :
-  hBeetleMap("hBeetleMap", "PCN error map", tell1s+2, -1.5, tell1s+0.5, 18, -1.5, 16.5)
-{
+/**
+ * PCNErrorMap implementations
+ *
+ */
 
+
+PCNErrorMap::PCNErrorMap(unsigned int tell1s) :
+  hBeetleMap("hBeetleMap", "PCN error map", tell1s+2, -1.5, tell1s+0.5, 18, -1.5, 16.5),
+  _debug(false)
+{
   hBeetleMap.SetXTitle("Tell1 id");
   hBeetleMap.SetYTitle("Beetle no.");
 }
