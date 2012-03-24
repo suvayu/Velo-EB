@@ -65,6 +65,9 @@ PCNErrorMap::~PCNErrorMap()
 }
 
 
+void PCNError::setDebug(bool debug) { _debug = debug; }
+
+
 void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
 {
   PCNError::eightbits pcnbits(err.getBits(PCNError::kPCN)),
@@ -114,7 +117,7 @@ void PCNErrorMap::Draw(std::string opts)
   for(unsigned int i = 2; i <= nhists; ++i) {
     canvas->cd(i);
     histItr->second->Draw(opts.c_str());
-    histItr->second->Print("all");
+    if (_debug) histItr->second->Print("all");
     histItr++;
   }
   return;
