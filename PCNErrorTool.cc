@@ -8,38 +8,25 @@
  *         compile as:
  *         $ g++ -o makePCNErrorMap -Wall $(root-config --cflags --libs) PCNErrorTool.cc PCNErrorMap.cxx
  * 
- * 
  */
 
+// STL
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <vector>
-#include <cstdio>
-#include <cstdlib>
-#include <cassert>
-#include <bitset>
-#include <exception>
-#include <typeinfo>
-#include <iostream>
 #include <sstream>
 
 // for debugging
 #include <cassert>
 #include <exception>
 
-#include <TString.h>
+// ROOT classes
 #include <TH2D.h>
-#include <TPad.h>
 #include <TCanvas.h>
 #include <TTree.h>
 #include <TFile.h>
 #include <TStyle.h>
 #include <TROOT.h>
 
-// #include <boost/foreach.hpp>
-
-// #include "utils.hh"
 #include "PCNErrorMap.hxx"
 
 
@@ -50,7 +37,7 @@ int main()
 
   long long runNo, eventID;
   int tell1, Beetle, ExpPCN;
-  char cexpbits[9], cbadbits[9];
+  char cexpbits[9], cbadbits[9]; // 8 bits + null string
   std::string expbits, badbits;
 
   ftree->SetBranchAddress("runNo"  , &runNo  );
@@ -63,20 +50,19 @@ int main()
 
   unsigned long nentries(ftree->GetEntries());
 
-  PCNErrorMap *errmap = new PCNErrorMap(128);
+  PCNErrorMap *errmap = new PCNErrorMap(128); // excluding the 4 pileup sensors
   for (unsigned int i = 0; i < nentries; ++i) {
     ftree->GetEntry(i);
 
     try {
       expbits = cexpbits;
       badbits = cbadbits;
+
+      PCNError err(expbits,badbits);
+      errmap->Fill(tell1, Beetle, err);
     } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
-
-    PCNError err(expbits,badbits);
-    errmap->Fill(tell1, Beetle, err);
-    // if (i > 10) break;
   }
 
   gStyle->SetOptStat(0);
@@ -87,8 +73,8 @@ int main()
   TCanvas *canvas = dynamic_cast<TCanvas*>(gROOT->FindObject("canvas"));
   canvas->Print(".png");
 
+  // house cleaning
   delete errmap;
   file.Close();
-
   return 0;
 }
