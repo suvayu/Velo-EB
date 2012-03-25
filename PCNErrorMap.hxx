@@ -31,15 +31,13 @@
 class PCNError {
 public:
 
-  /**
-   * An enum defining different bit types.
-   *
-   */
-  enum _PCN_T {
+  enum _PCN_T {			/**< Define different bit types. */
     kPCN,			/**< Correct PCN */
     kXOR,			/**< Exclusive OR of bad PCN with correct PCN */
-    kBAD };			/**< Incorrect PCN */
-  typedef std::bitset<8> eightbits;
+    kBAD			/**< Incorrect PCN */
+  };
+
+  typedef std::bitset<8> eightbits; /**< Typedef for 8 bit bitset. */
 
   /**
    * Constructor to initialise from unsigned integers
@@ -65,7 +63,7 @@ public:
    *
    * @return Returned bitset
    */
-  eightbits getBits(_PCN_T bittype=kPCN);
+  eightbits getBits(_PCN_T bittype=kPCN) const;
 
   /**
    * Set PCN bits from unsigned integers
@@ -92,11 +90,47 @@ private:
 };
 
 
+class Key {
+public:
+
+  enum _BITWORD {		/**< Define bit lengths. */
+    kBEETLE = 4,		/**< Beetle chip number (0-15). */
+    kTELL1ID = 8		/**< TELL1 board number (0-131). */
+  };
+
+  /**
+   * Constructor initialised with the TELL1 id and Beetle chip number.
+   *
+   * The two numbers are bitshifted and stored as a single number. The
+   * key is initialised as: \f$ key = TELL1 \oplus (Beetle << 4) \f$.
+   *
+   * @param tell1id TELL1 board number
+   * @param beetle Beetle chip number
+   */
+  Key(unsigned int tell1id, unsigned int beetle);
+  ~Key();
+
+  /** 
+   * Return TELL1 id or Beetle number depending on type
+   *
+   * @param type _BITWORD type to return
+   *
+   * @return TELL1 id or Beetle number
+   */
+  unsigned int get(_BITWORD type) const;
+  operator unsigned int () const; /**< Type conversion operator for unsigned integers. */
+
+private:
+
+  unsigned int _key;		/**< Beetle key. */
+};
+
+
 class PCNErrorMap {
 public:
 
-  typedef std::map<unsigned int, TH2D*> TH2DMap;
-  typedef std::map<unsigned int, long>  longMap;
+  typedef std::map<unsigned int, TH2D*> TH2DMap; /**< Typedef for a histogram map. */
+  typedef std::map<unsigned int, long>  longMap; /**< Typedef for a long map. */
 
   /**
    * Constructor to initialise from total number of TELL1 boards in

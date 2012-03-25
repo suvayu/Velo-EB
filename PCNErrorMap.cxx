@@ -20,10 +20,9 @@
 #include "PCNErrorMap.hxx"
 
 
-/**
- * PCNError implementations
- *
- */
+//////////////////////////////
+// PCNError implementations //
+//////////////////////////////
 
 
 PCNError::PCNError(unsigned int pcn, unsigned int pcnxor) :
@@ -38,7 +37,7 @@ PCNError::PCNError(std::string pcnbits, std::string xorbits) :
 PCNError::~PCNError() {}
 
 
-PCNError::eightbits PCNError::getBits(_PCN_T bittype)
+PCNError::eightbits PCNError::getBits(_PCN_T bittype) const
 {
   unsigned int value(-1);
   if (bittype == kPCN) value = _pcn;
@@ -65,15 +64,38 @@ void PCNError::setBits(std::string pcnbits, std::string xorbits)
 }
 
 
-/**
- * PCNErrorMap implementations
- *
- */
+/////////////////////////
+// Key implementations //
+/////////////////////////
+
+
+Key::Key(unsigned int tell1id, unsigned int beetle) :
+  _key(tell1id|(beetle<<kTELL1ID)) {}
+
+
+Key::~Key() {}
+
+
+unsigned int Key::get(_BITWORD type) const
+{
+  unsigned int num(-1);
+  if (type == kBEETLE) num = _key&kBEETLE;
+  if (type == kTELL1ID) num = _key>>kTELL1ID;
+  return num; 
+}
+
+
+Key::operator unsigned int () const { return _key; }
+
+
+/////////////////////////////////
+// PCNErrorMap implementations //
+/////////////////////////////////
 
 
 PCNErrorMap::PCNErrorMap(unsigned int tell1s) :
-  hBeetleMap("hBeetleMap", "PCN error map", tell1s+2, -1.5, tell1s+0.5, 18, -1.5, 16.5),
-  _debug(false)
+  _debug(false),
+  hBeetleMap("hBeetleMap", "PCN error map", tell1s+2, -1.5, tell1s+0.5, 18, -1.5, 16.5)
 {
   hBeetleMap.SetXTitle("Tell1 id");
   hBeetleMap.SetYTitle("Beetle no.");
@@ -87,7 +109,7 @@ PCNErrorMap::~PCNErrorMap()
 }
 
 
-void PCNError::setDebug(bool debug) { _debug = debug; }
+void PCNErrorMap::setDebug(bool debug) { _debug = debug; }
 
 
 void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
