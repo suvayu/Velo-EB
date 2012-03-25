@@ -28,10 +28,12 @@
 // #include <TCanvas.h>
 
 
+/// PCNError defines PCN errors from PCN and XOR bits
 class PCNError {
 public:
 
-  enum _PCN_T {			/**< Define different bit types. */
+  /// Define different bit types.
+  enum _PCN_T {
     kPCN,			/**< Correct PCN */
     kXOR,			/**< Exclusive OR of bad PCN with correct PCN */
     kBAD			/**< Incorrect PCN */
@@ -90,10 +92,12 @@ private:
 };
 
 
+/// Key implements a mapping between TELL1 id and Beetle number to an integer
 class Key {
 public:
 
-  enum _BITWORD {		/**< Define bit lengths. */
+  /// Define bit lengths.
+  enum _BITWORD {
     kBEETLE = 4,		/**< Beetle chip number (0-15). */
     kTELL1ID = 8		/**< TELL1 board number (0-131). */
   };
@@ -126,6 +130,7 @@ private:
 };
 
 
+/// PCNErrorMap implements a map for PCN errors
 class PCNErrorMap {
 public:
 
