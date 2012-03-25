@@ -1,0 +1,66 @@
+# -*- mode: org; default-input-method: TeX; -*-
+
+* Intro
+This is a collection of utilities and classes for Error Bank analysis
+for the *LHCb VErtex LOcator*.
+
++ A rudimentary parser that reads ascii tables from Vetra logs.
++ Two classes, =PCNError= and =PCNErrorMap=, to analyse PCN errors in
+  the *VELO*.
+
+
+* Log parser
+Since it takes days to run over a dataset with Vetra, the "parser"
+(parserPCNErrors) tries to read ascii tables from the Vetra log files
+(using some =sed= foo) and reads it into a ROOT tree. This is then
+dumped to a ROOT file for further analysis.
+
+/Usage/:
+: $ ./parsePCNErrors [options] --file <input log file>
+: 
+:    --file    Log file with input data in an ascii table, e.g.
+:              | col1 | col2 |
+:              |------+------|
+:              |   34 | 1010 |
+: 
+:    --header  Table header string for TTree::ReadFile() (default below).
+:              runNo/L:eventID/L:tell1/I:ExpPCN/I:Beetle/I:expbits/C:badbits/C
+: 
+:    --temp    Temporary file to use (default: /tmp/PCNErrors.txt).
+: 
+:    --output  ROOT file to dump TTree.
+ 
+/How to build/:
+: $ g++ -o parsePCNErrors -Wall $(root-config --cflags --libs) parsePCNErrors.cc
+
+
+* Pipeline Column Number (PCN) error map
+The VELO keeps a pipeline buffer as it records events. It keeps track
+of this buffer with an eight bit number called the /Pipeline Column
+Number/. There can be desynchronisation errors in these PCNs, which
+might affect data quality. These two classes are used to analyse these
+PCN errors.
+
+** =PCNError=
+This =class= defines a PCN error in the terms of the expected (correct)
+PCN and the exclusive OR of the faulty PCN value with the correct PCN.
+
+: _xor = _good_pcn xor _bad_pcn
+
+This picks out the flipped bits.
+
+** =PCNErrorMap=
+This =class= defines a map[fn:1] of the Beetle chips reporting PCN
+errors and a bitwise map[fn:2] of the faulty Beetle chips. The
+underlying map is represented as 2-dimensional histograms.
+
+The PCN error map is also stored as sparse error map in the STL map
+=ErrCounter=.
+
+
+* Footnotes
+
+[fn:1] The =hBeetleMap= histogram
+
+[fn:2] The =hperBeetleBitMap= histogram
+
