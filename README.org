@@ -41,6 +41,9 @@ Number/. There can be desynchronisation errors in these PCNs, which
 might affect data quality. These two classes are used to analyse these
 PCN errors.
 
+/How to build/:
+: $ g++ -o makePCNErrorMap -Wall $(root-config --cflags --libs) PCNErrorTool.cc PCNErrorMap.cxx
+
 ** =PCNError=
 This =class= defines a PCN error in the terms of the expected (correct)
 PCN and the exclusive OR of the faulty PCN value with the correct PCN.
@@ -57,6 +60,9 @@ underlying map is represented as 2-dimensional histograms.
 The PCN error map is also stored as sparse error map in the STL map
 =ErrCounter=.
 
+
+* Documentation
+GitHub pages - http://suvayu.github.com/Velo-EB/
 
 * Footnotes
 
