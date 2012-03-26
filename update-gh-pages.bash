@@ -20,7 +20,7 @@ git rebase master
 # update doxygen HTML documentation and commit changes
 doxygen docs/Velo-EB-doxy.conf > /dev/null
 git add docs/html/ > /dev/null
-git commit -m "Update doxygen html documentation" > /dev/null
+git commit --amend -C HEAD --reset-author > /dev/null
 
 # # update doxygen PDF documentation and commit changes
 # pushd ${TOPDIR/docs/latex} && (make; make; make;) > /dev/null
