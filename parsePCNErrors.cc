@@ -4,6 +4,7 @@
  * @date   Sat Mar 24 02:20:55 2012
  *
  * @brief  CLI utility to parse Vetra log files and dump ROOT trees.
+ *
  *         Parsing equivalent to: (parse only rows with numbers or white space)
  *         $ sed -ne '/^ *|[0-9 |]\\+| *$/ {s/|//gp}' logfile > space-separated-tempfile
  *
@@ -33,7 +34,13 @@
 #include <boost/foreach.hpp>
 
 
+/**
+ * This is a test for templated methods.
+ *
+ * @param col
+ */
 template <class T> void test(std::vector<T> &col);
+
 
 int main(int argc, char *argv[])
 {

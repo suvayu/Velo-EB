@@ -74,7 +74,7 @@ namespace Parsers {
    *
    * @param var string with column header.
    * @param val Vector of class T to read from column (T must have a
-   constructor like this T(const char *)).
+                constructor like this T(const char *)).
    * @param fname Configuration file to parse.
    */
   void readtable(std::string var, std::vector<std::string> &col, std::string fname);
