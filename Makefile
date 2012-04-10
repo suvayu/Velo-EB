@@ -23,11 +23,11 @@ DOCDIR            = docs
 
 # all: parsePCNErrors makePCNErrorMap docs
 
-parser: $(PARSERSRC)
-	$(CXX) $(CFLAGS) $(ROOTLIBS) $(PARSERSRC) -o $@
+parsePCNErrors:  $(PARSERSRC)
+	$(CXX) $(CFLAGS) $(ROOTLIBS) $^ -o $@
 
-errormap: $(ERRMAPSRC)
-	  $(CXX) $(CFLAGS) $(ROOTLIBS) $(ERRMAPSRC) -o $@
+makePCNErrorMap: $(ERRMAPSRC)
+	$(CXX) $(CFLAGS) $(ROOTLIBS) $^ -o $@
 
 docs:
 	doxygen docs/Velo-EB-doxy.conf > /dev/null
@@ -39,4 +39,4 @@ clean:
 	rm -f parsePCNErrors makePCNErrorMap
 
 clean-docs:
-		rm -rf $(DOCDIR)/html $(DOCDIR)/latex $(DOCDIR)/man
+	rm -rf $(DOCDIR)/html $(DOCDIR)/latex $(DOCDIR)/man
