@@ -137,8 +137,9 @@ void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
       hperBeetleBitMap[key]->SetYTitle("Bit values for correct PCN");
     }
 
+    // store bits in the reverse order (MSB -> LSB)
     for (unsigned int i = 0; i < 8; ++i) { // 8 bits
-      if (xorbits.test(i)) hperBeetleBitMap[key]->Fill(i,pcnbits[i]);
+      if (xorbits.test(7-i)) hperBeetleBitMap[key]->Fill(i,pcnbits[7-i]);
     }
   }
   return;

@@ -155,7 +155,9 @@ public:
 
   /**
    * Fill the underlying histograms describing the PCN error map as
-   * per TELL1 board ids, Beetle numbers and reported PCN error.
+   * per TELL1 board ids, Beetle numbers and reported PCN error. The
+   * bins are filled in reverse, MSB to LSB. This is done to
+   * correspond with how we would write a binary bit on paper.
    *
    * @param tell1id TELL1 board id
    * @param beetle Beetle number
