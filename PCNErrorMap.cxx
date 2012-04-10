@@ -16,6 +16,7 @@
 #include <exception>
 
 #include <TCanvas.h>
+#include <TAxis.h>
 
 #include "PCNErrorMap.hxx"
 
@@ -99,6 +100,8 @@ PCNErrorMap::PCNErrorMap(unsigned int tell1s) :
 {
   hBeetleMap.SetXTitle("Tell1 id");
   hBeetleMap.SetYTitle("Beetle no.");
+  hBeetleMap.GetXaxis()->SetTitleSize(0.05);
+  hBeetleMap.GetYaxis()->SetTitleSize(0.05);
 }
 
 
@@ -131,10 +134,34 @@ void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
       htitle("Per Beetle PCN error map " + coords.str());
 
     if (hperBeetleBitMap[key] == NULL) {
+      int xbins(10), ybins(4);	// two empty bins on either side for aesthetic reasons
       hperBeetleBitMap[key] = new TH2D(hname.c_str(), htitle.c_str(),
-				     10, -1.5, 8.5, 4, -1.5, 2.5);
+				     xbins, -1.5, 8.5, ybins, -1.5, 2.5);
       hperBeetleBitMap[key]->SetXTitle("Bits with errors");
-      hperBeetleBitMap[key]->SetYTitle("Bit values for correct PCN");
+      hperBeetleBitMap[key]->SetYTitle("Correct value for bad PCN bit");
+
+      // nicer axis title and labels
+      TAxis *xaxis = hperBeetleBitMap[key]->GetXaxis();
+      TAxis *yaxis = hperBeetleBitMap[key]->GetYaxis();
+
+      std::stringstream lbl;
+      for(int i = 1; i <= xbins; ++i) {
+	if (i == 1 or i == xbins) lbl.str("");
+	else lbl << xbins-1-i;
+	xaxis->SetBinLabel(i, lbl.str().c_str());
+	lbl.str("");
+      }
+      xaxis->SetLabelSize(0.06);
+      xaxis->SetTitleSize(0.05);
+
+      for(int i = 1; i <= ybins; ++i) {
+	if (i == 1 or i == ybins) lbl.str("");
+	else lbl << i-2;
+	yaxis->SetBinLabel(i, lbl.str().c_str());
+	lbl.str("");
+      }
+      yaxis->SetLabelSize(0.06);
+      yaxis->SetTitleSize(0.05);
     }
 
     // store bits in the reverse order (MSB -> LSB)
