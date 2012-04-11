@@ -33,6 +33,9 @@ doc:
 	doxygen Velo-EB-doxy.conf > /dev/null
 	cd $(DOCDIR)/latex && (make; make; make;) &> /dev/null
 
+website:
+	cd $(DOCDIR) && git push -f origin gh-pages
+
 clean:
 	rm -f parsePCNErrors makePCNErrorMap
 
