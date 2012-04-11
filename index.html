@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+
+  <title>suvayu/Velo-EB @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #c4eddc;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #3b1223; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #3b1223; }
+    h3 { text-align: center; color: #3b1223; }
+    a { color: #3b1223; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+
+<body>
+  <a href="https://github.com/suvayu/Velo-EB"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="https://github.com/suvayu/Velo-EB/zipball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
+      <a href="https://github.com/suvayu/Velo-EB/tarball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="https://github.com/suvayu/Velo-EB">Velo-EB</a>
+      <span class="small">by <a href="https://github.com/suvayu">suvayu</a></span></h1>
+
+    <div class="description">
+      Utilities to make plots, parse Vetra log files for VELO Error Bank analysis
+    </div>
+
+    <!-- Org output goes here -->
+    <div id="outline-container-1" class="outline-2">
+    <h2 id="sec-1">Intro</h2>
+    <div class="outline-text-2" id="text-1">
+
+    <p>This is a collection of utilities and classes for Error Bank analysis
+    for the <b>LHCb VErtex LOcator</b>.
+    </p>
+    <ul>
+    <li>A rudimentary parser that reads ascii tables from Vetra logs.
+    </li>
+    <li>Two classes, <code>PCNError</code> and <code>PCNErrorMap</code>, to analyse PCN errors in
+    the <b>VELO</b>.
+    </li>
+    </ul>
+
+
+
+    </div>
+
+    </div>
+
+    <div id="outline-container-2" class="outline-2">
+    <h2 id="sec-2">Log parser</h2>
+    <div class="outline-text-2" id="text-2">
+
+    <p>Since it takes days to run over a dataset with Vetra, the "parser"
+    (parserPCNErrors) tries to read ascii tables from the Vetra log files
+    (using some <code>sed</code> foo) and reads it into a ROOT tree. This is then
+    dumped to a ROOT file for further analysis.
+    </p>
+    <p>
+    <i>Usage</i>:
+    </p><pre class="example">
+    $ ./parsePCNErrors [options] --file &lt;input log file&gt;
+
+    --file    Log file with input data in an ascii table, e.g.
+    | col1 | col2 |
+    |------+------|
+    |   34 | 1010 |
+
+    --header  Table header string for TTree::ReadFile() (default below).
+    runNo/L:eventID/L:tell1/I:ExpPCN/I:Beetle/I:expbits/C:badbits/C
+
+    --temp    Temporary file to use (default: /tmp/PCNErrors.txt).
+
+    --output  ROOT file to dump TTree.
+    </pre>
+
+
+    <p> 
+    <i>How to build</i>:
+    </p><pre class="example">
+    $ g++ -o parsePCNErrors -Wall $(root-config --cflags --libs) parsePCNErrors.cc
+    </pre>
+
+
+
+    </div>
+
+    </div>
+
+    <div id="outline-container-3" class="outline-2">
+    <h2 id="sec-3">Pipeline Column Number (PCN) error map</h2>
+    <div class="outline-text-2" id="text-3">
+
+    <p>The VELO keeps a pipeline buffer as it records events. It keeps track
+    of this buffer with an eight bit number called the <i>Pipeline Column Number</i>. There can be desynchronisation errors in these PCNs, which
+    might affect data quality. These two classes are used to analyse these
+    PCN errors.
+    </p>
+    <p>
+    <i>How to build</i>:
+    </p><pre class="example">
+    $ g++ -o makePCNErrorMap -Wall $(root-config --cflags --libs) PCNErrorTool.cc PCNErrorMap.cxx
+    </pre>
+
+
+
+    </div>
+
+    <div id="outline-container-3-1" class="outline-3">
+    <h3 id="sec-3-1"><code>PCNError</code></h3>
+    <div class="outline-text-3" id="text-3-1">
+
+    <p>This <code>class</code> defines a PCN error in the terms of the expected (correct)
+    PCN and the exclusive OR of the faulty PCN value with the correct PCN.
+    </p>
+    <pre class="example">
+    _xor = _good_pcn xor _bad_pcn
+    </pre>
+
+
+    <p>
+    This picks out the flipped bits.
+    </p>
+    </div>
+
+    </div>
+
+    <div id="outline-container-3-2" class="outline-3">
+    <h3 id="sec-3-2"><code>PCNErrorMap</code></h3>
+    <div class="outline-text-3" id="text-3-2">
+
+    <p>This <code>class</code> defines an error map<sup><a class="footref" name="fnr.1" href="#fn.1">1</a></sup> with all the Beetle chips
+    reporting PCN errors and a bitwise map<sup><a class="footref" name="fnr.2" href="#fn.2">2</a></sup> for all the faulty Beetle
+    chips. The underlying maps in both cases are represented as
+    2-dimensional histograms.
+    </p>
+    <p>
+    The PCN error map is also stored as sparse error map in the STL map
+    <code>ErrCounter</code>. The class <code>Key</code> reimplements this sparse error map. This
+    might be used in the future if there is any need for a more user
+    friendly interface.
+    </p>
+
+    </div>
+    </div>
+
+    </div>
+
+    <div id="outline-container-4" class="outline-2">
+    <h2 id="sec-4">Documentation</h2>
+    <div class="outline-text-2" id="text-4">
+
+    <ul>
+    <li>GitHub pages - <a href="http://suvayu.github.com/Velo-EB/">http://suvayu.github.com/Velo-EB/</a>
+    </li>
+    <li>Class documentation - <a href="http://suvayu.github.com/Velo-EB/docs/html/index.html">Doxygen html documentation</a>
+    </li>
+    </ul>
+
+
+
+    </div>
+
+    </div>
+
+    <div id="outline-container-5" class="outline-2">
+    <h2 id="sec-5">Authors</h2>
+    <div class="outline-text-2" id="text-5">
+
+    <p>Suvayu Ali
+    </p>
+
+    </div>
+
+    </div>
+
+    <div id="outline-container-6" class="outline-2">
+    <h2 id="sec-6">Download</h2>
+    <div class="outline-text-2" id="text-6">
+
+    <p>You can download this project in either <a href="https://github.com/suvayu/Velo-EB/zipball/master">zip</a> or <a href="https://github.com/suvayu/Velo-EB/tarball/master">tar</a> formats. You can
+    also clone the project with Git by running:
+    </p>
+    <pre class="example">
+    $ git clone git://github.com/suvayu/Velo-EB
+    </pre>
+
+
+    <div id="footnotes">
+    <h2 class="footnotes">Footnotes: </h2>
+    <div id="text-footnotes">
+    <p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> The <code>hBeetleMap</code> histogram
+    </p>
+
+    <p class="footnote"><sup><a class="footnum" name="fn.2" href="#fnr.2">2</a></sup> The <code>hperBeetleBitMap</code> histogram
+    </p>
+
+
+    </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    <!-- Org output goes here -->
+
+    <div class="footer">
+      get the source code on GitHub : <a href="https://github.com/suvayu/Velo-EB">suvayu/Velo-EB</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
