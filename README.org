@@ -67,7 +67,7 @@ friendly interface.
 
 * Documentation
 + GitHub pages - http://suvayu.github.com/Velo-EB/
-+ Class documentation - [[http://suvayu.github.com/Velo-EB/docs/html/index.html][Doxygen html documentation]]
++ Class documentation - [[http://suvayu.github.com/Velo-EB/html/index.html][Doxygen html documentation]]
 
 
 * Authors
