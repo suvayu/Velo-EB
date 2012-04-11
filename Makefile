@@ -29,14 +29,12 @@ parsePCNErrors:  $(PARSERSRC)
 makePCNErrorMap: $(ERRMAPSRC)
 	$(CXX) $(CFLAGS) $(ROOTLIBS) $^ -o $@
 
-docs:
-	doxygen docs/Velo-EB-doxy.conf > /dev/null
-	pushd $(DOCDIR)/latex
-	(make; make; make;) > /dev/null
-	popd
+doc:
+	doxygen Velo-EB-doxy.conf > /dev/null
+	cd $(DOCDIR)/latex && (make; make; make;) &> /dev/null
 
 clean:
 	rm -f parsePCNErrors makePCNErrorMap
 
-clean-docs:
+clean-doc:
 	rm -rf $(DOCDIR)/html $(DOCDIR)/latex $(DOCDIR)/man
