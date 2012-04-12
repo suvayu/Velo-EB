@@ -26,13 +26,39 @@
 #include <TFile.h>
 #include <TStyle.h>
 #include <TROOT.h>
+#include <TString.h>
 
 #include "PCNErrorMap.hxx"
 
 
-int main()
+int main(int argc, char *argv[])
 {
-  TFile file("PCNErrors.root", "read");
+  if (argc == 1 or argc % 2 != 1) {
+    std::cout << "Insufficient/incorrect number of arguments."
+	      << std::endl << std::endl;
+    std::cout << "Usage: ./makePCNErrorMap --input <input ROOT file>"
+	      << std::endl << std::endl;
+    std::cout << "   --input   Input ROOT file with TTree (compulsory argument)."
+	      << std::endl;
+    return 1;
+  }
+
+  std::vector<std::string> arguments;
+  for (int i = 1; i < argc; ++i) {
+    arguments.push_back(argv[i]);
+  }
+
+  // program options
+  std::string inFile;
+
+  assert(argc % 2);
+  for (unsigned int i = 0; i < arguments.size(); i+=2) {
+    TString opt(arguments[i]), value(arguments[i+1]);
+    opt.ToLower();
+    if ( opt.Contains("--input") )   inFile  = value.Data();
+  }
+
+  TFile file(inFile.c_str(), "read");
   TTree *ftree = dynamic_cast<TTree*>(file.Get("ftree"));
 
   long long runNo, eventID;
