@@ -39,6 +39,12 @@ int main(int argc, char *argv[])
     std::cout << "Usage: ./makePCNErrorMap --input <input ROOT file>"
 	      << std::endl << std::endl;
     std::cout << "   --input   Input ROOT file with TTree (compulsory argument)."
+	      << std::endl << std::endl;
+    std::cout << "   --output  Output plot filename (default: canvas.png)."
+	      << std::endl;
+    std::cout << "             If an unsupported file format is given, the default"
+	      << std::endl;
+    std::cout << "             is used instead (supported formats: png, pdf, ps, C)."
 	      << std::endl;
     return 1;
   }
@@ -49,14 +55,21 @@ int main(int argc, char *argv[])
   }
 
   // program options
-  std::string inFile;
+  std::string inFile, plotFile;
 
   assert(argc % 2);
   for (unsigned int i = 0; i < arguments.size(); i+=2) {
     TString opt(arguments[i]), value(arguments[i+1]);
     opt.ToLower();
-    if ( opt.Contains("--input") )   inFile  = value.Data();
+    if ( opt.Contains("--input") )  inFile   = value;
+    if ( opt.Contains("--output") ) plotFile = value;
   }
+
+  if (not (plotFile.length() - plotFile.rfind(".C") == 2 or
+	   plotFile.length() - plotFile.rfind(".ps") == 3 or
+	   plotFile.length() - plotFile.rfind(".png") == 4 or
+	   plotFile.length() - plotFile.rfind(".pdf") == 4))
+    plotFile = "canvas.png";
 
   TFile file(inFile.c_str(), "read");
   TTree *ftree = dynamic_cast<TTree*>(file.Get("ftree"));
@@ -91,13 +104,14 @@ int main(int argc, char *argv[])
     }
   }
 
+  gStyle->SetCanvasPreferGL(true);
   gStyle->SetOptStat(0);
   gStyle->SetPalette(1);
   gStyle->SetNumberContours(256);
   errmap->Draw("colz");
 
   TCanvas *canvas = dynamic_cast<TCanvas*>(gROOT->FindObject("canvas"));
-  canvas->Print(".png");
+  canvas->Print(plotFile.c_str());
 
   // house cleaning
   delete errmap;
