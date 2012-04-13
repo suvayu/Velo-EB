@@ -3,7 +3,7 @@
 # location of root-config
 ROOTCONFIG	  = $(shell which root-config)
 # compiler
-CXX		  = $(shell $(ROOTCONFIG) --cxx) -Wall
+CXX		  = $(shell $(ROOTCONFIG) --cxx) -Wall $(DEBUG)
 # compiler flags
 CFLAGS		  = $(shell $(ROOTCONFIG) --cflags)
 # ROOT libs
