@@ -137,7 +137,7 @@ void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
       int xbins(10), ybins(4);	// two empty bins on either side for aesthetic reasons
       hperBeetleBitMap[key] = new TH2D(hname.c_str(), htitle.c_str(),
 				     xbins, -1.5, 8.5, ybins, -1.5, 2.5);
-      hperBeetleBitMap[key]->SetXTitle("Bits with errors");
+      hperBeetleBitMap[key]->SetXTitle("PCN bits with errors");
       hperBeetleBitMap[key]->SetYTitle("Correct value for bad PCN bit");
 
       // nicer axis title and labels
