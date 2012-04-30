@@ -23,6 +23,8 @@ DOCDIR            = docs
 
 # all: parsePCNErrors makePCNErrorMap docs
 
+.PHONY:	doc website clean clean-doc
+
 parsePCNErrors:  $(PARSERSRC)
 	$(CXX) $(CFLAGS) $(ROOTLIBS) $^ -o $@
 
@@ -34,7 +36,9 @@ doc:
 	cd $(DOCDIR)/latex && (make; make; make;) &> /dev/null
 
 website:
-	cd $(DOCDIR) && git push -f origin gh-pages
+	cd $(DOCDIR) && \
+	  git commit -a -m "Update html documentation" && \
+	  git push -f origin gh-pages
 
 clean:
 	rm -f parsePCNErrors makePCNErrorMap
