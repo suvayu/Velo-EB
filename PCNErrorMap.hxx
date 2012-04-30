@@ -173,6 +173,16 @@ public:
    */
   void Draw(std::string opts);
 
+  /**
+   * Write histograms to a ROOT file.
+   *
+   * Recreate the ROOT file from the passed string. Add ".root" to the
+   * string if not present before creating the file.
+   *
+   * @param fname ROOT file name (".root" is appended if missing)
+   */
+  void Write(std::string fname);
+
 private:
 
   // counters

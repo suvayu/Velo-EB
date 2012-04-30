@@ -17,6 +17,7 @@
 
 #include <TCanvas.h>
 #include <TAxis.h>
+#include <TFile.h>
 
 #include "PCNErrorMap.hxx"
 
@@ -192,5 +193,22 @@ void PCNErrorMap::Draw(std::string opts)
     if (_debug) histItr->second->Print("all");
     ++histItr;
   }
+  return;
+}
+
+
+void PCNErrorMap::Write(std::string fname)
+{
+  if (not (fname.length() - fname.rfind(".root") == 5))
+    fname = fname + ".root";
+  TFile file(fname.c_str(), "recreate");
+  file.cd();
+  hBeetleMap.Write();
+  TH2DMap::const_iterator histItr = hperBeetleBitMap.begin();
+  while (histItr != hperBeetleBitMap.end()) {
+    histItr->second->Write();
+    ++histItr;
+  }
+  file.Close();
   return;
 }

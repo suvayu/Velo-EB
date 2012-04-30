@@ -108,10 +108,12 @@ int main(int argc, char *argv[])
   gStyle->SetOptStat(0);
   gStyle->SetPalette(1);
   gStyle->SetNumberContours(256);
+  // errmap->setDebug(true);
   errmap->Draw("colz");
 
   TCanvas *canvas = dynamic_cast<TCanvas*>(gROOT->FindObject("canvas"));
   canvas->Print(plotFile.c_str());
+  // errmap->Write("hists.root");
 
   // house cleaning
   delete errmap;
