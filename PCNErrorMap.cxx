@@ -128,8 +128,8 @@ void PCNErrorMap::Fill(unsigned int tell1id, unsigned int beetle, PCNError err)
     hBeetleMap.Fill(tell1id, beetle);
 
     std::stringstream coords, hnum;
-    coords << "(" << tell1id << "," << beetle << ")" << std::endl;
-    hnum   << tell1id << "_" << beetle << std::endl;
+    coords << "(" << tell1id << "," << beetle << ")";
+    hnum   << tell1id << "_" << beetle;
     std::string hname("hperBeetleBitMap_" + hnum.str()),
       htitle("Per Beetle PCN error map " + coords.str());
 
@@ -190,7 +190,7 @@ void PCNErrorMap::Draw(std::string opts)
     canvas->cd(i);
     histItr->second->Draw(opts.c_str());
     if (_debug) histItr->second->Print("all");
-    histItr++;
+    ++histItr;
   }
   return;
 }

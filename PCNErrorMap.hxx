@@ -138,8 +138,7 @@ public:
   typedef std::map<unsigned int, long>  longMap; /**< Typedef for a long map. */
 
   /**
-   * Constructor to initialise from total number of TELL1 boards in
-   * the data
+   * Constructor initialised from total number of TELL1 boards.
    *
    * @param tell1s Total number of TELL1 boards
    */
@@ -154,6 +153,8 @@ public:
   void setDebug(bool debug);
 
   /**
+   * Fill the PCN error map.
+   *
    * Fill the underlying histograms describing the PCN error map as
    * per TELL1 board ids, Beetle numbers and reported PCN error. The
    * bins are filled in reverse, MSB to LSB. This is done to
