@@ -142,6 +142,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a970ec66684a9c323e1262da27e12e35c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCNErrorMap.html#a970ec66684a9c323e1262da27e12e35c">setDebug</a> (bool debug)</td></tr>
 <tr class="memitem:a6dc27ffdc02af43c378056f95f25117e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCNErrorMap.html#a6dc27ffdc02af43c378056f95f25117e">Fill</a> (unsigned int tell1id, unsigned int beetle, <a class="el" href="classPCNError.html">PCNError</a> err)</td></tr>
 <tr class="memitem:a769d49268a38514cbbf8a42b016fe75d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCNErrorMap.html#a769d49268a38514cbbf8a42b016fe75d">Draw</a> (std::string opts)</td></tr>
+<tr class="memitem:ad51883158381e3c6900053d1f73df03d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCNErrorMap.html#ad51883158381e3c6900053d1f73df03d">Write</a> (std::string fname)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a2cab412b3258de4ee6aeebedb1a3f74e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPCNErrorMap.html#a653ac7ea0924d33ce1521b2ef67b898d">longMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCNErrorMap.html#a2cab412b3258de4ee6aeebedb1a3f74e">ErrCounter</a></td></tr>
@@ -195,7 +196,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Constructor to initialise from total number of TELL1 boards in the data</p>
+<p>Constructor initialised from total number of TELL1 boards.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">tell1s</td><td>Total number of TELL1 boards </td></tr>
@@ -260,6 +261,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>Fill the PCN error map.</p>
 <p>Fill the underlying histograms describing the PCN error map as per TELL1 board ids, Beetle numbers and reported PCN error. The bins are filled in reverse, MSB to LSB. This is done to correspond with how we would write a binary bit on paper.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -290,6 +292,31 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">debug</td><td>Debug mode boolean </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad51883158381e3c6900053d1f73df03d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classPCNErrorMap.html#ad51883158381e3c6900053d1f73df03d">PCNErrorMap::Write</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Write histograms to a ROOT file.</p>
+<p>Recreate the ROOT file from the passed string. Add ".root" to the string if not present before creating the file.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>ROOT file name (".root" is appended if missing) </td></tr>
   </table>
   </dd>
 </dl>
@@ -363,7 +390,7 @@ Private Attributes</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classPCNErrorMap.html">PCNErrorMap</a>      </li>
 
-    <li class="footer">Generated on Wed Apr 11 2012 17:19:40 for Velo-EB by
+    <li class="footer">Generated on Mon Apr 30 2012 14:16:26 for Velo-EB by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.0 </li>
    </ul>

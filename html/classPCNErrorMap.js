@@ -7,6 +7,7 @@ var classPCNErrorMap =
     [ "Draw", "classPCNErrorMap.html#a769d49268a38514cbbf8a42b016fe75d", null ],
     [ "Fill", "classPCNErrorMap.html#a6dc27ffdc02af43c378056f95f25117e", null ],
     [ "setDebug", "classPCNErrorMap.html#a970ec66684a9c323e1262da27e12e35c", null ],
+    [ "Write", "classPCNErrorMap.html#ad51883158381e3c6900053d1f73df03d", null ],
     [ "_debug", "classPCNErrorMap.html#ac6968708a293fc1af18d09e6bf7026bf", null ],
     [ "ErrCounter", "classPCNErrorMap.html#a2cab412b3258de4ee6aeebedb1a3f74e", null ],
     [ "hBeetleMap", "classPCNErrorMap.html#a7c966f78aee3238c86b17e6935c11eb9", null ],
